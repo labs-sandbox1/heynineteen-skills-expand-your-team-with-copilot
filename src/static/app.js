@@ -27,15 +27,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Dark mode toggle
   const darkModeToggle = document.getElementById("dark-mode-toggle");
+  function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    darkModeToggle.textContent = theme === "dark" ? "☀️" : "🌙";
+    darkModeToggle.setAttribute("aria-label", theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+  }
   const savedTheme = localStorage.getItem("theme") || "light";
-  document.documentElement.setAttribute("data-theme", savedTheme);
-  darkModeToggle.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+  applyTheme(savedTheme);
   darkModeToggle.addEventListener("click", () => {
     const current = document.documentElement.getAttribute("data-theme");
     const next = current === "dark" ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", next);
     localStorage.setItem("theme", next);
-    darkModeToggle.textContent = next === "dark" ? "☀️" : "🌙";
+    applyTheme(next);
   });
 
   // Activity categories with corresponding colors
